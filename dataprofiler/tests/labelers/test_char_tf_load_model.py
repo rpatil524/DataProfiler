@@ -6,14 +6,13 @@ from unittest import mock
 
 import numpy as np
 import pandas as pd
-import pkg_resources
 import tensorflow as tf
 
+from dataprofiler.labelers import utils as labeler_utils
 from dataprofiler.labelers.char_load_tf_model import CharLoadTFModel
 
 _file_dir = os.path.dirname(os.path.abspath(__file__))
-_resource_labeler_dir = pkg_resources.resource_filename("resources", "labelers")
-
+default_labeler_dir = labeler_utils.find_resources_dir("labelers")
 
 mock_model_parameters = {
     "model_path": "project/example/path/fake_model.h5",
@@ -303,7 +302,9 @@ class TestCharLoadTFModel(unittest.TestCase):
             "fake_extra_param": "fails",
         }
         model = CharLoadTFModel(
-            self.model_path, label_mapping=self.label_mapping, parameters=parameters
+            self.model_path,
+            label_mapping=self.label_mapping,
+            parameters=parameters,
         )
         model._construct_model()
         self.assertDictEqual(parameters, model._parameters)

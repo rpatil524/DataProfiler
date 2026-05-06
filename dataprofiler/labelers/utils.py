@@ -1,7 +1,17 @@
 """Contains functions for checking for installations/dependencies."""
+
+import importlib.resources
 import sys
 import warnings
+from pathlib import Path
 from typing import Any, Callable, List
+
+try:
+    # Newer Pythons / newer typeshed
+    from importlib.resources.abc import Traversable
+except ModuleNotFoundError:
+    # Older Pythons
+    from importlib.abc import Traversable
 
 
 def warn_missing_module(labeler_function: str, module_name: str) -> None:
@@ -50,3 +60,15 @@ def require_module(names: List[str]) -> Callable:
         return new_f
 
     return check_module
+
+
+def find_resources_dir(resource_path: str | Path | None = None) -> Traversable:
+    """Return the path to the package resources."""
+    resource = importlib.resources.files("dataprofiler") / "resources"
+    if resource_path:
+        resource /= resource_path
+
+    if not (resource.is_file() or resource.is_dir()):
+        raise FileNotFoundError(f"Resource not found: {resource_path}")
+
+    return resource

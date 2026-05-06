@@ -1,9 +1,9 @@
 import unittest
 
 import numpy as np
-import pkg_resources
 
 import dataprofiler as dp
+from dataprofiler.labelers import utils as labeler_utils
 from dataprofiler.labelers.column_name_model import ColumnNameModel
 from dataprofiler.labelers.data_labelers import BaseDataLabeler
 from dataprofiler.labelers.data_processing import (
@@ -11,7 +11,7 @@ from dataprofiler.labelers.data_processing import (
     DirectPassPreprocessor,
 )
 
-default_labeler_dir = pkg_resources.resource_filename("resources", "labelers")
+default_labeler_dir = labeler_utils.find_resources_dir("labelers")
 
 
 class TestColumnNameDataLabeler(unittest.TestCase):

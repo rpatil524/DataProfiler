@@ -6,16 +6,16 @@ from unittest import mock
 
 import numpy as np
 import pandas as pd
-import pkg_resources
 import tensorflow as tf
 
+from dataprofiler.labelers import utils as labeler_utils
 from dataprofiler.labelers.character_level_cnn_model import (
     CharacterLevelCnnModel,
     EncodingLayer,
 )
 
 _file_dir = os.path.dirname(os.path.abspath(__file__))
-_resource_labeler_dir = pkg_resources.resource_filename("resources", "labelers")
+_resource_labeler_dir = labeler_utils.find_resources_dir("labelers")
 
 
 mock_model_parameters = {

@@ -6,13 +6,13 @@ from io import StringIO
 from unittest import mock
 
 import numpy as np
-import pkg_resources
 
 import dataprofiler as dp
+from dataprofiler.labelers import utils as labeler_utils
 from dataprofiler.labelers.column_name_model import ColumnNameModel
 
-_file_dir = os.path.dirname(os.path.abspath(__file__))
-_resource_labeler_dir = pkg_resources.resource_filename("resources", "labelers")
+_resource_labeler_dir = labeler_utils.find_resources_dir("labelers")
+
 
 mock_model_parameters = {
     "true_positive_dict": [

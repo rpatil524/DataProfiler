@@ -7,8 +7,8 @@ from io import StringIO
 from unittest import mock
 
 import numpy as np
-import pkg_resources
 
+from dataprofiler.labelers import utils as labeler_utils
 from dataprofiler.labelers.data_processing import (
     BaseDataProcessor,
     CharEncodedPreprocessor,
@@ -224,7 +224,9 @@ class TestBaseDataProcessor(unittest.TestCase):
         BaseDataProcessor.load_from_library("default")
 
         # assert called with proper load_processor dirpath
-        default_labeler_dir = pkg_resources.resource_filename("resources", "labelers")
+
+        default_labeler_dir = labeler_utils.find_resources_dir("labelers")
+
         mocked_load.assert_called_with(os.path.join(default_labeler_dir, "default"))
 
     @mock.patch("builtins.open")
